@@ -1,25 +1,76 @@
-import React from 'react'
+import React, {useState} from 'react'
+import axios from 'axios'
+
 
 function LogIn() {
-    return (
-        
+
+
+
+
+  const initialValues ={ 
+    email:"",
+    password:"",
+
+  }
+
+  const [formValues, setFormValues] = useState(initialValues);
+  const [error, setError]= useState("")
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setUsername] = useState();
+ 
+  function handleOnChange(e) {
+    setFormValues({...formValues, [e.target.name] : e.target.value})
+  }
+
+  function handleOnSubmit(e){
+    e.preventDefault();
+    
+
+     axios
+  .post('http://localhost:1337/auth/local', {
+    identifier: formValues.email,
+    password: formValues.password,
+  })
+  .then(response => {
+    console.log('Well done!');
+    console.log('User profile', response.data.user);
+    console.log('User token', response.data.jwt);
+    console.log ("user data", response.data)
+    setUsername (response.data.user.username)
+    setLoggedIn(true)
+  })
+  .catch((err)=>{console.log(err)
+    setError("Invalid")
+  })
+ 
+
+  }
+
+     
+     
+      
+   return (
+
+
+<>   
+
+{loggedIn ? <div>Welcome {username}</div> :
 <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
   <div className="max-w-md w-full space-y-8">
     <div>
       <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow"/>
-      
-      
     </div>
-    <form className="mt-8 space-y-6" action="#" method="POST">
+    <h1>{error}</h1>
+    <form className="mt-8 space-y-6" onSubmit={handleOnSubmit} method="POST">
       <input type="hidden" name="remember" value="true"/>
       <div className="rounded-md shadow-sm -space-y-px">
         <div>
           <label htmlFor="email-address" className="sr-only">Email address</label>
-          <input id="email-address" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address"/>
+          <input id="email-address" value={formValues.email} onChange={handleOnChange} name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address"/>
         </div>
         <div>
           <label htmlFor="password" className="sr-only">Password</label>
-          <input id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password"/>
+          <input id="password" value={formValues.password} onChange={handleOnChange} name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password"/>
         </div>
       </div>
 -
@@ -53,8 +104,13 @@ function LogIn() {
     </form>
   </div>
 </div>
+}
+
+</>
 
     )
+
+
 }
 
 export default LogIn

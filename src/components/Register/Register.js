@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 function Register() {
 
@@ -35,28 +35,7 @@ function Register() {
            })
     }
 
-    useEffect (()=>{
-
-       
-
-    const loginUser = async ()=>{
-
-      const res =  await axios.post('http://localhost:1337/auth/local', {
-        identifier: 'use@gmail.com',
-        password: 'password',
-      })
-      
-    console.log('login',res)
-    }
-
-
-    loginUser()
-
-    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjMwNjcxMDg1LCJleHAiOjE2MzMyNjMwODV9.RhpxSF2ciMginCKwjh2kG9y9f_qp0ClxWU3RvviTjlc"
-
-
-
-}, [])
+ 
 
 
     return (
