@@ -13,6 +13,7 @@ function Menu() {
                 <Link to="/form">Product</Link>
                 <Link to="/contact">Contact</Link>
                 <Link to="/login">Login</Link>
+                <Link to="/register">Register</Link>
             </nav>
         </div>
     )

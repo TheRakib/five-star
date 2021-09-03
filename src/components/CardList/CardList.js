@@ -34,7 +34,7 @@ function CardList() {
             </h1>
             
             {products.map((p)=>{
-                return(<Card productName ={p.name} price ={p.price} description={p.description} />
+                return(<Card key={p.id} image={p.img} name ={p.name} price ={p.price} description={p.description} />
                     )
             })}
             
