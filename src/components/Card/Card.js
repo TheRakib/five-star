@@ -1,15 +1,111 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './Card.css'
+import Modal from 'react-modal'
+import axios from 'axios';
+
 
 function Card({image, name, price , description}) {
 
-  //<div className="w-1/3 bg-cover" > 
- // <img src={`http://localhost:1337${image.url}`} alt="some image from database"/>
- // </div>
+  
+
+  const customStyles = {
+    content : {
+      background: "gray",
+      height:"500px",
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
+
+  
+  const initialValues = {
+
+    name:"",
+    timeToAppointment:"",
+    mobile:null
+  }
+
+  const [modalIsOpen,setIsOpen] = useState(false);
+  
+  const [formValues, setFormValues] = useState(initialValues)
+  const [userId, setUserId] = useState(localStorage.getItem("userId"))
+  
+  // 
+  const [username , setUsername] = useState(localStorage.getItem("username"))
+  const [token, setToken]= useState(localStorage.getItem("jwt"));
+
+
+  
+
+  function openModal() {
+    setIsOpen(true)
+}
+
+function closeModal() {
+
+setIsOpen(false)
+}
+
+function onHandleChange(e) {
+
+  setFormValues({...formValues, [e.target.name]:e.target.value})
+
+ }
+ 
+ async function onHandleSubmit(e){
+              e.preventDefault();
+
+
+  try {
+
+  const response=  await axios.post("http://localhost:1337/userBookings", {
+      name:username,
+      timeToAppointment:formValues.timeToAppointment,
+      mobile:Number(formValues.mobile),
+     
+      users_permissions_user:userId
+      
+     
+  }, 
+  {headers: {
+      Authorization: `Bearer ${token}`,
+    }  
+  }
+    )
+
+  console.log(response)
+}
+catch(error) {
+
+  console.log(error)
+}
+ }
+
+
+function  deleteCard() {
+  
+
+  // axios.delete("http://localhost:1337/product/2", {headers: {}})
+
+}
+
+
     return (
+
+     
 
         <div className="py-6 mx-6" >
           <div className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
+          
+            
+          <div className="w-1/3 bg-cover" > 
+          <img src={`http://localhost:1337`} alt=""/>
+          </div> 
+         
            
           <div className="w-2/3 p-4">
            <h1 className="text-gray-900 font-bold text-2xl">{name}</h1>
@@ -33,7 +129,30 @@ function Card({image, name, price , description}) {
            </div>
         <div className="flex item-center justify-between mt-3">
         <h1 className="text-gray-700 font-bold text-xl">{price}</h1>
-        <button className="px3 py2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Add to Cart</button>
+        <button className="px3 py2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openModal}>Add to Card</button>
+        <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={deleteCard} >Delete</button>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+
+          {/* <h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2> */}
+          <button onClick={closeModal}>close</button>
+          <div>I am a modal</div>
+          <form   onSubmit= {onHandleSubmit}>
+              <input type="text" name="name" value={username}  onChange={onHandleChange} />
+              <input type="text" name="timeToAppointment" value={formValues.timeToAppointment}  onChange={onHandleChange}  />
+              <input type="number" name="mobile"  value={formValues.mobile}    onChange={onHandleChange} />
+              <button type="submit">Send</button>
+          </form>
+        </Modal>
+
+
+
+
+    
         </div>
       </div>
       </div>    

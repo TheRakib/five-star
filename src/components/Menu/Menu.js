@@ -34,7 +34,7 @@ function Menu() {
                     <input type="text"  placeholder="Search your Products"/>
                 </form>
                 <Link to="/card">Home</Link>
-                <Link to="/form">Product</Link>
+                <Link to="/addProduct">Product</Link>
                 <Link to="/contact">Contact</Link>
                 <button onClick={clearLocalStorage}>logout</button>
               </div> )   
@@ -43,7 +43,7 @@ function Menu() {
                   <input type="text"  placeholder="Search your Products"/>
                 </form>
                 <Link to="/card">Home</Link>
-                <Link to="/form">Product</Link>
+                <Link to="/addProduct">Product</Link>
                 <Link to="/contact">Contact</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Register</Link>

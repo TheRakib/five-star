@@ -1,19 +1,37 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
 
 function UploadFile() {
 
-    function FileUpload (e){
+    const [fileData, setFileData] = useState()
+
+    function handleOnChange(e){ 
+
+        setFileData(e.target.files[0])
+    }
+
+     async function FileUpload (e){
         e.preventDefault();
+        
+        const data = new FormData();
+
+        data.append( "files",fileData);
 
 
-        const formData = new FormData();
-        console.log(formData)
+
+        const res = axios.post("http://localhost:1337/upload", data)
+        console.log(res)
+
+
+
+
+   
 
     }
     return (
         <div>
             <form onSubmit={FileUpload}>
-            <input type="file" name="file" />
+            <input type="file" name="file" onChange={handleOnChange} />
             <button>click to submit</button>
             </form>
         </div>
