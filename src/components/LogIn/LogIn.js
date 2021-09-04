@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -15,12 +16,20 @@ function LogIn() {
 
   const [formValues, setFormValues] = useState(initialValues);
   const [error, setError]= useState("")
-  const [loggedIn, setLoggedIn] = useState(false);
+  //const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState();
+  const [jwt, setJwt] = useState("");
+  const history = useHistory();
  
   function handleOnChange(e) {
     setFormValues({...formValues, [e.target.name] : e.target.value})
   }
+
+  useEffect(() => {
+    const JWT = localStorage.getItem("jwt")
+    setJwt(JWT)
+    
+  }, [])
 
   function handleOnSubmit(e){
     e.preventDefault();
@@ -35,9 +44,15 @@ function LogIn() {
     console.log('Well done!');
     console.log('User profile', response.data.user);
     console.log('User token', response.data.jwt);
+  
+    localStorage.setItem("jwt", response.data.jwt);
+
+    history.push("/card")
+    window.location.reload();
+
     console.log ("user data", response.data)
-    setUsername (response.data.user.username)
-    setLoggedIn(true)
+    //setUsername (response.data.user.username)
+    //setLoggedIn(true)
   })
   .catch((err)=>{console.log(err)
     setError("Invalid")
@@ -52,10 +67,7 @@ function LogIn() {
    return (
 
 
-<>   
-
-{loggedIn ? <div>Welcome {username}</div> :
-<div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
   <div className="max-w-md w-full space-y-8">
     <div>
       <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow"/>
@@ -103,10 +115,7 @@ function LogIn() {
       </div>
     </form>
   </div>
-</div>
-}
-
-</>
+</div>  
 
     )
 

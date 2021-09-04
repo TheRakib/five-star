@@ -1,4 +1,5 @@
 import axios from 'axios'
+import{useHistory} from 'react-router-dom'
 import React, {useState} from 'react'
 
 function Register() {
@@ -10,15 +11,17 @@ function Register() {
     }
     
     const [registerValues, setRegisterValues] = useState(initialValues)
-    const [registered, SetRegistered] = useState(false);
+    const [error, setError] = useState ("")
+    const history = useHistory();
+
 
 
     function handleOnChange(e){
         
         setRegisterValues({...registerValues, [e.target.name] : e.target.value})
-    
-
     }
+
+
 
     function handleOnSubmit(e){
         e.preventDefault();
@@ -29,10 +32,14 @@ function Register() {
           email : registerValues.email ,
           password : registerValues.password, 
         }).then( (e)=> {  
-                
-            if(e.data.user) 
-            SetRegistered(true)
+            if(e.data.user)
+            history.push("/login")
+            //SetRegistered(true)
            })
+           .catch((err)=>{console.log(err)
+            setError("Have already taken")
+          })
+         
     }
 
  
@@ -40,9 +47,8 @@ function Register() {
 
     return (
         <>
-        {registered ?  (<div> Welcome</div> ) :
         
-        (<div class="container max-w-full mx-auto md:py-24 px-6">
+        <div class="container max-w-full mx-auto md:py-24 px-6">
           <div class="max-w-sm mx-auto px-6">
             <div class="relative flex flex-wrap">
                 <div class="w-full relative">
@@ -50,7 +56,7 @@ function Register() {
                       <div class="text-center font-semibold text-black">
                         Register User  
                       </div>
-                    
+                      
                       <form class="mt-8" x-data="{password: '',password_confirm: ''}" onSubmit={handleOnSubmit} >
                         <div class="mx-auto max-w-lg ">
                             <div class="py-1">
@@ -59,7 +65,9 @@ function Register() {
                                        class="text-md block px-3 py-2 rounded-lg w-full
                                   bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
                             </div>
+                            
                             <div class="py-1">
+                                <div>{error}</div>
                             <div className="text-purple-600"> </div>
                                 <span class="px-1 text-sm text-gray-600">Email</span>
                                 <input placeholder="" type="email" name="email" value={registerValues.email} onChange={handleOnChange}
@@ -105,8 +113,8 @@ function Register() {
                 </div>
             </div>
           </div>
-       </div>) 
-       }
+       </div>
+       
 
 
 </>

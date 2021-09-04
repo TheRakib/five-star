@@ -1,4 +1,4 @@
-nav{
+.nav{
     display: flex;
     line-height: 40px;
     font-size: 20px;
@@ -7,16 +7,12 @@ nav{
     font-family: Georgia, 'Times New Roman', Times, serif;
 
 }
-img{
-    height: 50px;
-    width: 100px;
-}
 
-nav a {
+.nav a {
     text-decoration: none;
 
 }
-nav a:hover{
+.nav a:hover{
     font-weight: bold;
     
     
