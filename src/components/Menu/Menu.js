@@ -35,6 +35,7 @@ function Menu() {
                 </form>
                 <Link to="/card">Home</Link>
                 <Link to="/addProduct">Product</Link>
+                <Link to="/myBooking">My Booking</Link>
                 <Link to="/contact">Contact</Link>
                 <button onClick={clearLocalStorage}>logout</button>
               </div> )   

@@ -2,11 +2,13 @@ import React from 'react'
 import { BrowserRouter as Router,
     Route,} from "react-router-dom";
 import AddToCard from '../AddToCard/AddToCard';
+import API from '../API/API';
 import CardList from '../CardList/CardList';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import Form from '../Form/Form';
 import LogIn from '../LogIn/LogIn';
 import Menu from '../Menu/Menu';
+import MyBooking from '../MyBooking/MyBooking';
 import Register from '../Register/Register';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import UploadFile from '../UploadFile/UploadFile';
@@ -24,6 +26,8 @@ function AppRoute() {
              <Route path="/resetPassword" component={ResetPassword}   />
              <Route path="/forgotPassword" component={ForgotPassword}   />
              <Route path="/file" component={UploadFile}   />
+             <Route path="/myBooking" component={MyBooking}   />
+             <Route path="/api" component={API}   />
 
              
 

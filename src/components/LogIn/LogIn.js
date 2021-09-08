@@ -46,6 +46,11 @@ function LogIn() {
     console.log('User token', response.data.jwt);
   
     localStorage.setItem("jwt", response.data.jwt);
+    localStorage.setItem("userId", response.data.user.id)
+    localStorage.setItem("userEmail", response.data.user.email)
+    
+
+
 
     history.push("/card")
     window.location.reload();

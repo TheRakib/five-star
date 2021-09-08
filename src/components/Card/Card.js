@@ -1,10 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import './Card.css'
 import Modal from 'react-modal'
 import axios from 'axios';
 
 
-function Card({image, name, price , description}) {
+function Card({productId, image, name, price , description}) {
 
   
 
@@ -29,14 +29,27 @@ function Card({image, name, price , description}) {
     mobile:null
   }
 
+
+
+  
+
   const [modalIsOpen,setIsOpen] = useState(false);
   
   const [formValues, setFormValues] = useState(initialValues)
-  const [userId, setUserId] = useState(localStorage.getItem("userId"))
+  const [userId, setUserId] = useState(null);
+
+  
   
   // 
-  const [username , setUsername] = useState(localStorage.getItem("username"))
-  const [token, setToken]= useState(localStorage.getItem("jwt"));
+ // const [username , setUsername] = useState(localStorage.getItem("username"))
+  //const [token, setToken]= useState(localStorage.getItem("jwt"));
+
+  useEffect(()=>{
+    const userId = localStorage.getItem("userId")
+    
+    setUserId(userId)
+
+  }, [])
 
 
   
@@ -60,25 +73,28 @@ function onHandleChange(e) {
               e.preventDefault();
 
 
+ 
+
+
   try {
 
-  const response=  await axios.post("http://localhost:1337/userBookings", {
-      name:username,
+  const response=  await axios.post("http://localhost:1337/user-bookings", {
+      name:formValues.name,
       timeToAppointment:formValues.timeToAppointment,
       mobile:Number(formValues.mobile),
+      //userId: 8,
+      //productId: 1
+
+    })
      
-      users_permissions_user:userId
+      //users_permissions_user:userId
       
      
-  }, 
-  {headers: {
-      Authorization: `Bearer ${token}`,
-    }  
+  //},{headers: { Authorization: `Bearer ${token}`,} 
+   console.log(response)
   }
-    )
 
-  console.log(response)
-}
+
 catch(error) {
 
   console.log(error)
@@ -86,12 +102,7 @@ catch(error) {
  }
 
 
-function  deleteCard() {
-  
 
-  // axios.delete("http://localhost:1337/product/2", {headers: {}})
-
-}
 
 
     return (
@@ -130,7 +141,7 @@ function  deleteCard() {
         <div className="flex item-center justify-between mt-3">
         <h1 className="text-gray-700 font-bold text-xl">{price}</h1>
         <button className="px3 py2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openModal}>Add to Card</button>
-        <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={deleteCard} >Delete</button>
+       
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
@@ -138,11 +149,11 @@ function  deleteCard() {
           contentLabel="Example Modal"
         >
 
-          {/* <h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2> */}
+         
           <button onClick={closeModal}>close</button>
           <div>I am a modal</div>
           <form   onSubmit= {onHandleSubmit}>
-              <input type="text" name="name" value={username}  onChange={onHandleChange} />
+              <input type="text" name="name" value={formValues.name}    onChange={onHandleChange} />
               <input type="text" name="timeToAppointment" value={formValues.timeToAppointment}  onChange={onHandleChange}  />
               <input type="number" name="mobile"  value={formValues.mobile}    onChange={onHandleChange} />
               <button type="submit">Send</button>
