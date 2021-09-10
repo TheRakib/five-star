@@ -18,6 +18,7 @@ function AppRoute() {
         <div>
             <Router>
              <Menu />
+             <Route path="/" component={CardList} />
              <Route path="/card" exact component={CardList}  />
              <Route path="/form" component={Form}   />
              <Route path="/login" component={LogIn}   />
@@ -28,10 +29,7 @@ function AppRoute() {
              <Route path="/file" component={UploadFile}   />
              <Route path="/myBooking" component={MyBooking}   />
              <Route path="/api" component={API}   />
-
-             
-
-            </Router>
+             </Router>
         </div>
     )
 }

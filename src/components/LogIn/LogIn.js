@@ -47,7 +47,7 @@ function LogIn() {
   
     localStorage.setItem("jwt", response.data.jwt);
     localStorage.setItem("userId", response.data.user.id)
-    localStorage.setItem("userEmail", response.data.user.email)
+    //localStorage.setItem("username", response.data.user.username)
     
 
 

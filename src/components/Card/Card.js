@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState} from 'react'
 import './Card.css'
 import Modal from 'react-modal'
 import axios from 'axios';
@@ -36,20 +36,17 @@ function Card({productId, image, name, price , description}) {
   const [modalIsOpen,setIsOpen] = useState(false);
   
   const [formValues, setFormValues] = useState(initialValues)
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] =  useState(localStorage.getItem("userId"))
+  const [username , setUsername] = useState(localStorage.getItem("username"))
+  const [token, setToken]= useState(localStorage.getItem("jwt"));
+  //
 
-  
-  
-  // 
- // const [username , setUsername] = useState(localStorage.getItem("username"))
-  //const [token, setToken]= useState(localStorage.getItem("jwt"));
-
-  useEffect(()=>{
+  /*useEffect(()=>{
     const userId = localStorage.getItem("userId")
     
     setUserId(userId)
 
-  }, [])
+  }, [])*/
 
 
   
@@ -70,7 +67,10 @@ function onHandleChange(e) {
  }
  
  async function onHandleSubmit(e){
-              e.preventDefault();
+
+ 
+
+   e.preventDefault();
 
 
  
@@ -79,18 +79,25 @@ function onHandleChange(e) {
   try {
 
   const response=  await axios.post("http://localhost:1337/user-bookings", {
-      name:formValues.name,
+    
+   
+      name:username,
       timeToAppointment:formValues.timeToAppointment,
       mobile:Number(formValues.mobile),
+      users_permissions_user: userId
       //userId: 8,
       //productId: 1
 
-    })
+    },
+    { headers: { Authorization: `Bearer ${token}`,
+    }
+  } 
+)
      
-      //users_permissions_user:userId
+     
       
      
-  //},{headers: { Authorization: `Bearer ${token}`,} 
+  
    console.log(response)
   }
 
@@ -153,7 +160,7 @@ catch(error) {
           <button onClick={closeModal}>close</button>
           <div>I am a modal</div>
           <form   onSubmit= {onHandleSubmit}>
-              <input type="text" name="name" value={formValues.name}    onChange={onHandleChange} />
+              <input type="text" name="name" value={username}    onChange={onHandleChange} />
               <input type="text" name="timeToAppointment" value={formValues.timeToAppointment}  onChange={onHandleChange}  />
               <input type="number" name="mobile"  value={formValues.mobile}    onChange={onHandleChange} />
               <button type="submit">Send</button>

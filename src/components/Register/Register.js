@@ -2,6 +2,7 @@ import axios from 'axios'
 import{useHistory} from 'react-router-dom'
 import React, {useState} from 'react'
 
+
 function Register() {
 
     const initialValues = {
@@ -12,6 +13,8 @@ function Register() {
     
     const [registerValues, setRegisterValues] = useState(initialValues)
     const [error, setError] = useState ("")
+    const [isAdmin, setIsAdmin] = useState ("")
+    
     const history = useHistory();
 
 
@@ -30,9 +33,13 @@ function Register() {
        axios.post('http://localhost:1337/auth/local/register',{
           username : registerValues.username,
           email : registerValues.email ,
-          password : registerValues.password, 
+          password : registerValues.password,
+          isAdmin
+          
+
         }).then( (e)=> {  
             if(e.data.user)
+           
             history.push("/login")
             //SetRegistered(true)
            })
@@ -47,6 +54,7 @@ function Register() {
 
     return (
         <>
+       
         
         <div class="container max-w-full mx-auto md:py-24 px-6">
           <div class="max-w-sm mx-auto px-6">
@@ -114,6 +122,7 @@ function Register() {
             </div>
           </div>
        </div>
+       
        
 
 

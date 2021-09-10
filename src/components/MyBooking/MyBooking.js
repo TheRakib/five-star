@@ -10,6 +10,7 @@ const [bookings, setBookings] = useState([])
 
 
 const [userId, setUserId] = useState(localStorage.getItem("userId"))
+const [token, setToken]= useState(localStorage.getItem("jwt"));
 
 
 
@@ -22,6 +23,9 @@ useEffect(()=>{
    const fetchData = async ()=>{
         const res = await axios.get(`http://localhost:1337/user-bookings?users_permissions_user.id=${userId}`
         , {
+
+            headers: { Authorization: `Bearer ${token}`,
+        } 
             
         })
 
