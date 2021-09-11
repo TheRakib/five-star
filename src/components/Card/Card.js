@@ -4,8 +4,12 @@ import Modal from 'react-modal'
 import axios from 'axios';
 
 
+
+
 function Card({productId, image, name, price , description}) {
 
+
+ 
   
 
   const customStyles = {

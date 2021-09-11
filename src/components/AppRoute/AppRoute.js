@@ -4,6 +4,7 @@ import { BrowserRouter as Router,
 import AddToCard from '../AddToCard/AddToCard';
 import API from '../API/API';
 import CardList from '../CardList/CardList';
+import Child from '../Child/Child';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import Form from '../Form/Form';
 import LogIn from '../LogIn/LogIn';
@@ -18,7 +19,6 @@ function AppRoute() {
         <div>
             <Router>
              <Menu />
-             <Route path="/" component={CardList} />
              <Route path="/card" exact component={CardList}  />
              <Route path="/form" component={Form}   />
              <Route path="/login" component={LogIn}   />
@@ -29,6 +29,7 @@ function AppRoute() {
              <Route path="/file" component={UploadFile}   />
              <Route path="/myBooking" component={MyBooking}   />
              <Route path="/api" component={API}   />
+             <Route path="/child" component={Child}   />
              </Router>
         </div>
     )

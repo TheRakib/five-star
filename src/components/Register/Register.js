@@ -13,7 +13,7 @@ function Register() {
     
     const [registerValues, setRegisterValues] = useState(initialValues)
     const [error, setError] = useState ("")
-    const [isAdmin, setIsAdmin] = useState ("")
+    
     
     const history = useHistory();
 
@@ -34,7 +34,7 @@ function Register() {
           username : registerValues.username,
           email : registerValues.email ,
           password : registerValues.password,
-          isAdmin
+          
           
 
         }).then( (e)=> {  
